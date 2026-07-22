@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -22,8 +23,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { posts as mockPosts, type Post, type PostStatut } from "@/lib/mock-data";
-import { Instagram, Facebook, Music2, Check, X, Eye, CheckCircle2, XCircle } from "lucide-react";
+import { Instagram, Facebook, Music2, Check, X, Eye, CheckCircle2, XCircle, Search } from "lucide-react";
 import { toast } from "sonner";
+import { DataPagination, usePagedSlice } from "@/components/data-pagination";
 
 export const Route = createFileRoute("/community")({
   component: CommunityPage,
