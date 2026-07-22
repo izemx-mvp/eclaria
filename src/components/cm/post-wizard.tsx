@@ -20,7 +20,7 @@ import { ScheduleDialog } from "./schedule-dialog";
 import { burstConfetti } from "@/lib/confetti";
 
 const STEPS = ["Médias & contenu", "Aperçu IA", "Plateformes & publication"] as const;
-const ALL_PLATFORMS: SocialPlatform[] = ["LinkedIn", "Facebook", "Instagram", "YouTube"];
+const ALL_PLATFORMS: SocialPlatform[] = ["Facebook", "Instagram", "TikTok"];
 
 function emptyPost(): SocialPost {
   return {
@@ -125,11 +125,9 @@ export function PostWizard({
       const platforms = has ? p.platforms.filter((x) => x !== pl) : [...p.platforms, pl];
       const cfg = { ...p.platformConfig };
       if (!has) {
-        const map: Record<SocialPlatform, "Facebook" | "Instagram" | "LinkedIn" | "YouTube"> = {
-          LinkedIn: "LinkedIn", Facebook: "Facebook", Instagram: "Instagram", YouTube: "YouTube",
-        };
-        const conf = cmConfigStore.getFor(map[pl]);
+        const conf = cmConfigStore.getFor(pl);
         if (conf) cfg[pl] = { ...conf.settings };
+
       } else {
         delete cfg[pl];
       }
