@@ -1,8 +1,8 @@
 import { useSyncExternalStore } from "react";
-import { Facebook, Instagram, Linkedin, Youtube, Globe } from "lucide-react";
+import { Facebook, Instagram, Music2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export type SocialPlatform = "LinkedIn" | "Facebook" | "Instagram" | "YouTube";
+export type SocialPlatform = "Facebook" | "Instagram" | "TikTok";
 export type PostMediaKind = "image" | "video";
 
 export type PostMedia = {
@@ -49,7 +49,7 @@ export type PostIdea = {
   saved?: boolean;
 };
 
-export type CmPlatform = "Website" | "Facebook" | "Instagram" | "LinkedIn" | "YouTube";
+export type CmPlatform = "Facebook" | "Instagram" | "TikTok";
 export type CmPlatformConfig = {
   id: string;
   platform: CmPlatform;
@@ -59,26 +59,23 @@ export type CmPlatformConfig = {
 // ---------- constants ----------
 
 export const PLATFORM_META: Record<SocialPlatform, { color: string; bg: string; label: string }> = {
-  LinkedIn: { color: "text-sky-700 dark:text-sky-300", bg: "bg-sky-500/10", label: "LinkedIn" },
   Facebook: { color: "text-blue-700 dark:text-blue-300", bg: "bg-blue-500/10", label: "Facebook" },
   Instagram: { color: "text-pink-600 dark:text-pink-300", bg: "bg-pink-500/10", label: "Instagram" },
-  YouTube: { color: "text-red-600 dark:text-red-300", bg: "bg-red-500/10", label: "YouTube" },
+  TikTok: { color: "text-foreground", bg: "bg-foreground/10", label: "TikTok" },
 };
 
 export const PLATFORM_ICONS: Record<SocialPlatform, LucideIcon> = {
-  LinkedIn: Linkedin,
   Facebook,
   Instagram,
-  YouTube: Youtube,
+  TikTok: Music2,
 };
 
 export const CM_PLATFORM_ACCENT: Record<CmPlatform, { color: string; bg: string; icon: LucideIcon }> = {
-  Website: { color: "text-[color:var(--gold)]", bg: "bg-[color:var(--gold)]/10", icon: Globe },
   Facebook: { color: "text-blue-700 dark:text-blue-300", bg: "bg-blue-500/10", icon: Facebook },
   Instagram: { color: "text-pink-600 dark:text-pink-300", bg: "bg-pink-500/10", icon: Instagram },
-  LinkedIn: { color: "text-sky-700 dark:text-sky-300", bg: "bg-sky-500/10", icon: Linkedin },
-  YouTube: { color: "text-red-600 dark:text-red-300", bg: "bg-red-500/10", icon: Youtube },
+  TikTok: { color: "text-foreground", bg: "bg-foreground/10", icon: Music2 },
 };
+
 
 export const POST_IMAGES = [
   "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
