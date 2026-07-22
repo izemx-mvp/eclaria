@@ -365,8 +365,9 @@ export const cmConfigStore = {
 
 type EditorialConfig = { thematiques: string[]; topicsAvoid: string[] };
 const _editorial = createStore<EditorialConfig>({
-  thematiques: ["Marque employeur", "Onboarding", "IA & RH", "Bien-être", "Leadership"],
-  topicsAvoid: ["Politique", "Religion"],
+  thematiques: ["Soin visage", "Solaire & SPF", "Bébé & maman", "Compléments & immunité", "Cheveux & capillaire", "Conseils pharmacien"],
+  topicsAvoid: ["Prescription médicale", "Diagnostic", "Politique", "Religion"],
+
 });
 export const editorialConfigStore = {
   update: (patch: Partial<EditorialConfig>) => _editorial.set((s) => ({ ...s, ...patch })),
