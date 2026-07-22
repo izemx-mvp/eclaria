@@ -1,9 +1,10 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { PageHeader } from "@/components/page-header";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
@@ -22,8 +23,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { posts as mockPosts, type Post, type PostStatut } from "@/lib/mock-data";
-import { Instagram, Facebook, Music2, Check, X, Eye, CheckCircle2, XCircle } from "lucide-react";
+import { Instagram, Facebook, Music2, Check, X, Eye, CheckCircle2, XCircle, Search } from "lucide-react";
 import { toast } from "sonner";
+import { DataPagination, usePagedSlice } from "@/components/data-pagination";
 
 export const Route = createFileRoute("/community")({
   component: CommunityPage,
@@ -55,9 +57,22 @@ function CommunityPage() {
   const [preview, setPreview] = useState<Post | null>(null);
   const [editLegende, setEditLegende] = useState("");
   const [params, setParams] = useState(initialParams);
+  const [search, setSearch] = useState("");
+  const [canalFilter, setCanalFilter] = useState("tous");
+  const [statutFilter, setStatutFilter] = useState("tous");
+  const [page, setPage] = useState(1);
 
-  const today = new Date().toISOString().slice(0, 10);
-  const postsJour = posts.filter((p) => p.datePublication.startsWith(today));
+  const filteredPosts = useMemo(() => {
+    const q = search.trim().toLowerCase();
+    return posts.filter(
+      (p) =>
+        (canalFilter === "tous" || p.canal === canalFilter) &&
+        (statutFilter === "tous" || p.statut === statutFilter) &&
+        (q === "" || p.legende.toLowerCase().includes(q)),
+    );
+  }, [posts, search, canalFilter, statutFilter]);
+
+  const { slice, totalPages, safePage, start, end, total } = usePagedSlice(filteredPosts, page, 6);
 
   const openPreview = (p: Post) => {
     setPreview(p);
@@ -91,54 +106,84 @@ function CommunityPage() {
       <div className="flex-1 space-y-6 p-4 md:p-8">
         <Tabs defaultValue="posts">
           <TabsList>
-            <TabsTrigger value="posts">Posts du jour</TabsTrigger>
+            <TabsTrigger value="posts">Posts générés</TabsTrigger>
             <TabsTrigger value="parametrage">Paramétrage par canal</TabsTrigger>
           </TabsList>
 
-          <TabsContent value="posts" className="mt-6">
-            {postsJour.length === 0 ? (
+          <TabsContent value="posts" className="mt-6 space-y-4">
+            <div className="flex flex-wrap items-center gap-3">
+              <div className="relative flex-1 min-w-[240px] max-w-md">
+                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                <Input
+                  placeholder="Rechercher une légende…"
+                  value={search}
+                  onChange={(e) => { setSearch(e.target.value); setPage(1); }}
+                  className="pl-9"
+                />
+              </div>
+              <Select value={canalFilter} onValueChange={(v) => { setCanalFilter(v); setPage(1); }}>
+                <SelectTrigger className="w-[160px]"><SelectValue placeholder="Canal" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tous">Tous canaux</SelectItem>
+                  <SelectItem value="Instagram">Instagram</SelectItem>
+                  <SelectItem value="Facebook">Facebook</SelectItem>
+                  <SelectItem value="TikTok">TikTok</SelectItem>
+                  <SelectItem value="WhatsApp">WhatsApp</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={statutFilter} onValueChange={(v) => { setStatutFilter(v); setPage(1); }}>
+                <SelectTrigger className="w-[160px]"><SelectValue placeholder="Statut" /></SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="tous">Tous statuts</SelectItem>
+                  <SelectItem value="brouillon">Brouillon</SelectItem>
+                  <SelectItem value="planifié">Planifié</SelectItem>
+                  <SelectItem value="publié">Publié</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
+            {slice.length === 0 ? (
               <Card>
                 <CardContent className="py-10 text-center text-muted-foreground">
-                  Aucun post généré pour aujourd'hui.
+                  Aucun post ne correspond à votre recherche.
                 </CardContent>
               </Card>
             ) : (
-              <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-                {postsJour.map((p) => (
-                  <Card key={p.id} className="overflow-hidden">
-                    <div
-                      className="aspect-square"
-                      style={{ background: p.image }}
-                    />
-                    <CardContent className="p-4 space-y-3">
-                      <div className="flex items-center justify-between">
-                        <span className="text-xs font-medium text-muted-foreground">{p.canal}</span>
-                        <Badge variant="outline" className={statutStyles[p.statut]}>
-                          {p.statut}
-                        </Badge>
-                      </div>
-                      <p className="text-sm text-foreground line-clamp-3">{p.legende}</p>
-                      <div className="flex gap-2">
-                        <Button size="sm" variant="outline" className="flex-1" onClick={() => openPreview(p)}>
-                          <Eye className="h-3.5 w-3.5 mr-1" />
-                          Aperçu
-                        </Button>
-                        {p.statut === "brouillon" && (
-                          <>
-                            <Button size="sm" className="flex-1" onClick={() => valider(p.id)}>
-                              <Check className="h-3.5 w-3.5 mr-1" />
-                              Valider
-                            </Button>
-                            <Button size="sm" variant="ghost" onClick={() => rejeter(p.id)}>
-                              <X className="h-3.5 w-3.5" />
-                            </Button>
-                          </>
-                        )}
-                      </div>
-                    </CardContent>
-                  </Card>
-                ))}
-              </div>
+              <>
+                <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {slice.map((p) => (
+                    <Card key={p.id} className="overflow-hidden">
+                      <div className="aspect-square" style={{ background: p.image }} />
+                      <CardContent className="p-4 space-y-3">
+                        <div className="flex items-center justify-between">
+                          <span className="text-xs font-medium text-muted-foreground">{p.canal}</span>
+                          <Badge variant="outline" className={statutStyles[p.statut]}>{p.statut}</Badge>
+                        </div>
+                        <p className="text-sm text-foreground line-clamp-3">{p.legende}</p>
+                        <div className="flex gap-2">
+                          <Button size="sm" variant="outline" className="flex-1" onClick={() => openPreview(p)}>
+                            <Eye className="h-3.5 w-3.5 mr-1" /> Aperçu
+                          </Button>
+                          {p.statut === "brouillon" && (
+                            <>
+                              <Button size="sm" className="flex-1" onClick={() => valider(p.id)}>
+                                <Check className="h-3.5 w-3.5 mr-1" /> Valider
+                              </Button>
+                              <Button size="sm" variant="ghost" onClick={() => rejeter(p.id)}>
+                                <X className="h-3.5 w-3.5" />
+                              </Button>
+                            </>
+                          )}
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
+                <DataPagination
+                  page={safePage} totalPages={totalPages} onPageChange={setPage}
+                  start={start} end={end} total={total} itemLabel="posts"
+                />
+              </>
             )}
           </TabsContent>
 

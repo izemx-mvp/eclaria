@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ReclamationsRouteImport } from './routes/reclamations'
 import { Route as ParametresRouteImport } from './routes/parametres'
+import { Route as LoginRouteImport } from './routes/login'
 import { Route as GalerieRouteImport } from './routes/galerie'
 import { Route as CommunityRouteImport } from './routes/community'
 import { Route as CommandesRouteImport } from './routes/commandes'
@@ -24,6 +25,11 @@ const ReclamationsRoute = ReclamationsRouteImport.update({
 const ParametresRoute = ParametresRouteImport.update({
   id: '/parametres',
   path: '/parametres',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
   getParentRoute: () => rootRouteImport,
 } as any)
 const GalerieRoute = GalerieRouteImport.update({
@@ -52,6 +58,7 @@ export interface FileRoutesByFullPath {
   '/commandes': typeof CommandesRoute
   '/community': typeof CommunityRoute
   '/galerie': typeof GalerieRoute
+  '/login': typeof LoginRoute
   '/parametres': typeof ParametresRoute
   '/reclamations': typeof ReclamationsRoute
 }
@@ -60,6 +67,7 @@ export interface FileRoutesByTo {
   '/commandes': typeof CommandesRoute
   '/community': typeof CommunityRoute
   '/galerie': typeof GalerieRoute
+  '/login': typeof LoginRoute
   '/parametres': typeof ParametresRoute
   '/reclamations': typeof ReclamationsRoute
 }
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   '/commandes': typeof CommandesRoute
   '/community': typeof CommunityRoute
   '/galerie': typeof GalerieRoute
+  '/login': typeof LoginRoute
   '/parametres': typeof ParametresRoute
   '/reclamations': typeof ReclamationsRoute
 }
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
     | '/commandes'
     | '/community'
     | '/galerie'
+    | '/login'
     | '/parametres'
     | '/reclamations'
   fileRoutesByTo: FileRoutesByTo
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
     | '/commandes'
     | '/community'
     | '/galerie'
+    | '/login'
     | '/parametres'
     | '/reclamations'
   id:
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | '/commandes'
     | '/community'
     | '/galerie'
+    | '/login'
     | '/parametres'
     | '/reclamations'
   fileRoutesById: FileRoutesById
@@ -104,6 +116,7 @@ export interface RootRouteChildren {
   CommandesRoute: typeof CommandesRoute
   CommunityRoute: typeof CommunityRoute
   GalerieRoute: typeof GalerieRoute
+  LoginRoute: typeof LoginRoute
   ParametresRoute: typeof ParametresRoute
   ReclamationsRoute: typeof ReclamationsRoute
 }
@@ -122,6 +135,13 @@ declare module '@tanstack/react-router' {
       path: '/parametres'
       fullPath: '/parametres'
       preLoaderRoute: typeof ParametresRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/galerie': {
@@ -160,6 +180,7 @@ const rootRouteChildren: RootRouteChildren = {
   CommandesRoute: CommandesRoute,
   CommunityRoute: CommunityRoute,
   GalerieRoute: GalerieRoute,
+  LoginRoute: LoginRoute,
   ParametresRoute: ParametresRoute,
   ReclamationsRoute: ReclamationsRoute,
 }
