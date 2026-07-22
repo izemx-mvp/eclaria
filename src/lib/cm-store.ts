@@ -81,10 +81,10 @@ export const CM_PLATFORM_ACCENT: Record<CmPlatform, { color: string; bg: string;
 };
 
 export const POST_IMAGES = [
-  "https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=1200&q=80",
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&q=80",
-  "https://images.unsplash.com/photo-1600880292203-757bb62b4baf?w=1200&q=80",
-  "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?w=1200&q=80",
+  "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
+  "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=1200&q=80",
+  "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=1200&q=80",
+  "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=1200&q=80",
 ];
 
 export const POST_VIDEOS = [
@@ -93,16 +93,16 @@ export const POST_VIDEOS = [
 ];
 
 export const STOCK_IMAGES = [
-  "https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=70",
-  "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=800&q=70",
-  "https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=70",
-  "https://images.unsplash.com/photo-1553877522-43269d4ea984?w=800&q=70",
-  "https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?w=800&q=70",
-  "https://images.unsplash.com/photo-1600880292089-90a7e086ee0c?w=800&q=70",
+  "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=800&q=70",
+  "https://images.unsplash.com/photo-1571781926291-c477ebfd024b?w=800&q=70",
+  "https://images.unsplash.com/photo-1596462502278-27bfdc403348?w=800&q=70",
+  "https://images.unsplash.com/photo-1608248543803-ba4f8c70ae0b?w=800&q=70",
+  "https://images.unsplash.com/photo-1607619056574-7b8d3ee536b2?w=800&q=70",
+  "https://images.unsplash.com/photo-1585652757141-8837d1d24c66?w=800&q=70",
 ];
 
 export const LANGUES = ["Français", "English", "العربية", "Español"];
-export const TONS = ["Professionnel", "Chaleureux", "Expert", "Inspirationnel", "Humoristique", "Direct"];
+export const TONS = ["Professionnel", "Chaleureux", "Expert", "Conseil santé", "Rassurant", "Pédagogique"];
 
 // ---------- store factory ----------
 
@@ -139,30 +139,30 @@ const addDays = (n: number) => {
 const seedPosts: SocialPost[] = [
   {
     id: uid(),
-    titre: "Lancement du nouveau programme Leadership",
+    titre: "Routine soin visage : la crème hydratante SPF 50",
     caption:
-      "Chez Eclaria, nous croyons en un leadership de proximité qui transforme les équipes.\n\n📸 Nouvelle promotion en action lors du kickoff.\n\nContactez-nous pour en savoir plus 👉",
-    hashtags: ["#Leadership", "#RH", "#Eclaria"],
+      "☀️ Protégez votre peau tous les jours, même en hiver !\n\nNotre crème hydratante SPF 50 combine protection UVA/UVB et hydratation 24h. Idéale pour les peaux sensibles.\n\n💚 Disponible en parapharmacie Eclaria.\n👉 Commandez en ligne ou passez en boutique.",
+    hashtags: ["#Parapharmacie", "#SoinVisage", "#SPF50", "#Eclaria", "#Beaute"],
     media: [
-      { id: uid(), kind: "image", url: POST_IMAGES[0], legende: "Kickoff de la promotion 2026", description: "Photo de groupe lors du lancement." },
+      { id: uid(), kind: "image", url: POST_IMAGES[0], legende: "Crème solaire visage SPF 50", description: "Mise en avant produit sur fond épuré." },
     ],
-    platforms: ["LinkedIn", "Instagram"],
+    platforms: ["Instagram", "Facebook"],
     platformConfig: {},
     statut: "Publié",
     date: today(),
     heure: "10:30",
     auteur: "IA",
     langue: "Français",
-    ton: "Inspirationnel",
+    ton: "Conseil santé",
   },
   {
     id: uid(),
-    titre: "Coulisses de notre atelier bien-être",
-    caption: "Une matinée dédiée à l'équilibre pro/perso, animée par nos experts.\n\nRestez connectés pour la prochaine session ✨",
-    hashtags: ["#BienEtre", "#Equipe", "#Sante"],
+    titre: "Vitamine D : nos conseils pour l'hiver",
+    caption: "🌥️ Fatigue, baisse de moral, immunité en berne ? La vitamine D peut vous aider !\n\nNos pharmaciens vous conseillent la posologie adaptée. Passez en boutique pour un bilan personnalisé.",
+    hashtags: ["#VitamineD", "#Immunite", "#SanteHiver", "#ConseilPharmacien"],
     media: [
-      { id: uid(), kind: "image", url: POST_IMAGES[1], legende: "Atelier respiration", description: "Session collective en salle Zen." },
-      { id: uid(), kind: "video", url: POST_VIDEOS[0], poster: POST_IMAGES[2], legende: "Extrait vidéo de la session" },
+      { id: uid(), kind: "image", url: POST_IMAGES[1], legende: "Compléments alimentaires vitamine D", description: "Gamme de compléments en rayon." },
+      { id: uid(), kind: "video", url: POST_VIDEOS[0], poster: POST_IMAGES[2], legende: "Reel conseil pharmacien" },
     ],
     platforms: ["Instagram", "Facebook"],
     platformConfig: {},
@@ -171,22 +171,22 @@ const seedPosts: SocialPost[] = [
     heure: "09:00",
     auteur: "IA",
     langue: "Français",
-    ton: "Chaleureux",
+    ton: "Pédagogique",
   },
   {
     id: uid(),
-    titre: "Draft — annonce webinaire onboarding",
-    caption: "Un webinaire pour repenser votre parcours d'onboarding en 5 étapes.",
-    hashtags: ["#Onboarding", "#Webinaire"],
-    media: [{ id: uid(), kind: "image", url: POST_IMAGES[3], legende: "Visuel webinaire" }],
-    platforms: ["LinkedIn"],
+    titre: "Draft — Nouvelle gamme bébé & maman",
+    caption: "Découvrez notre sélection de soins doux pour bébé et jeunes mamans : liniment, crème change, tisanes d'allaitement.",
+    hashtags: ["#Bebe", "#Maman", "#SoinsDoux", "#Parapharmacie"],
+    media: [{ id: uid(), kind: "image", url: POST_IMAGES[3], legende: "Rayon bébé & maternité" }],
+    platforms: ["Instagram"],
     platformConfig: {},
     statut: "Brouillon",
     date: addDays(5),
     heure: "14:00",
     auteur: "Manuel",
     langue: "Français",
-    ton: "Professionnel",
+    ton: "Chaleureux",
   },
 ];
 
@@ -203,72 +203,74 @@ export const postsStore = {
 const seedIdeas: PostIdea[] = [
   {
     id: uid(),
-    titre: "Prévenir le burnout au bureau",
-    description: "Article social sur la détection précoce du burnout et 5 gestes concrets pour l'équipe RH.",
-    suggestedCaption: "Le burnout ne prévient pas. Voici 5 signaux à ne jamais ignorer 👇",
-    mediaConcept: "Illustration douce, palette verte, personne assise devant un ordi avec bulle de pensée.",
-    hashtags: ["#Burnout", "#RH", "#Bienetre", "#Prevention"],
-    platforms: ["LinkedIn", "Facebook"],
+    titre: "Protection solaire toute l'année",
+    description: "Post pédagogique sur l'importance du SPF même en hiver et en intérieur (lumière bleue).",
+    suggestedCaption: "Saviez-vous que 80% du vieillissement cutané vient du soleil ? ☀️ Voici pourquoi appliquer un SPF chaque matin.",
+    mediaConcept: "Photo produit crème solaire sur fond pastel, gouttelettes d'eau.",
+    hashtags: ["#SPF", "#SoinVisage", "#AntiAge", "#Parapharmacie"],
+    platforms: ["Instagram", "Facebook"],
     suggestedDate: addDays(1),
   },
   {
     id: uid(),
-    titre: "Coulisses d'un assessment center",
-    description: "Vidéo courte de 30 s montrant l'envers du décor d'un assessment center.",
-    suggestedCaption: "Ce qui se passe vraiment lors d'un assessment 🎬",
-    mediaConcept: "Reel Instagram avec sous-titres animés, plan serré sur badges et post-it.",
-    hashtags: ["#Assessment", "#Recrutement", "#RH"],
+    titre: "Cheveux qui tombent en automne",
+    description: "Reel court sur la chute saisonnière de cheveux et les compléments capillaires.",
+    suggestedCaption: "Vos cheveux tombent plus qu'à l'ordinaire ? C'est normal en automne. Voici notre routine anti-chute 💚",
+    mediaConcept: "Reel Instagram, avant/après brossage, ampoules capillaires en fin de vidéo.",
+    hashtags: ["#ChuteCheveux", "#Capillaire", "#Automne", "#Parapharmacie"],
     platforms: ["Instagram", "YouTube"],
     suggestedDate: addDays(3),
   },
   {
     id: uid(),
-    titre: "Étude rémunération 2026",
-    description: "Post carrousel avec 5 chiffres marquants de l'étude rémunération.",
-    suggestedCaption: "5 chiffres qui redéfinissent la rémunération en 2026.",
-    mediaConcept: "Carrousel infographique 5 slides, palette sobre.",
-    hashtags: ["#Remuneration", "#Etude", "#RH"],
-    platforms: ["LinkedIn"],
+    titre: "Trousse de secours de la rentrée",
+    description: "Carrousel 5 slides sur l'essentiel à avoir dans son armoire à pharmacie.",
+    suggestedCaption: "🎒 Rentrée = trousse à pharmacie à réviser. Voici notre check-list en 5 essentiels.",
+    mediaConcept: "Carrousel infographique 5 slides, palette verte apaisante.",
+    hashtags: ["#Pharmacie", "#Rentree", "#Sante", "#PremiersSecours"],
+    platforms: ["LinkedIn", "Facebook"],
     suggestedDate: addDays(4),
   },
   {
     id: uid(),
-    titre: "Interview client Cosumar",
-    description: "Extrait d'interview croisée avec le DRH de Cosumar.",
-    suggestedCaption: "\"L'IA nous a permis de recentrer les entretiens sur l'humain\" — DRH Cosumar",
-    mediaConcept: "Photo portrait + citation typographiée.",
-    hashtags: ["#Interview", "#Client", "#IA"],
-    platforms: ["LinkedIn", "Facebook"],
+    titre: "Témoignage cliente — soin peau atopique",
+    description: "Interview courte d'une cliente satisfaite de notre gamme peaux atopiques.",
+    suggestedCaption: "\"Ma peau ne me démange plus depuis que j'utilise le baume relipidant Eclaria\" — Nadia, cliente fidèle",
+    mediaConcept: "Portrait + citation typographiée, tons doux.",
+    hashtags: ["#Temoignage", "#PeauAtopique", "#Eczema", "#Eclaria"],
+    platforms: ["Instagram", "Facebook"],
     suggestedDate: addDays(6),
   },
   {
     id: uid(),
-    titre: "Webinaire onboarding",
-    description: "Save-the-date pour le webinaire onboarding du mois prochain.",
-    suggestedCaption: "📅 Rendez-vous le 15 pour repenser vos onboardings.",
-    mediaConcept: "Bannière event, dégradé primaire vers or.",
-    hashtags: ["#Webinaire", "#Onboarding"],
-    platforms: ["LinkedIn", "Instagram"],
+    titre: "Atelier bébé — massage & sommeil",
+    description: "Annonce d'un atelier gratuit en boutique pour jeunes parents.",
+    suggestedCaption: "👶 Rendez-vous samedi pour notre atelier massage bébé. Places limitées, inscription en boutique.",
+    mediaConcept: "Bannière événement, illustration douce maman-bébé.",
+    hashtags: ["#Bebe", "#Atelier", "#Parapharmacie", "#Eclaria"],
+    platforms: ["Instagram", "Facebook"],
     suggestedDate: addDays(8),
   },
   {
     id: uid(),
-    titre: "Chiffres engagement collaborateurs",
-    description: "Chiffres clés de notre enquête engagement.",
-    suggestedCaption: "78% des collaborateurs veulent plus de feedback. Et vous ?",
-    mediaConcept: "Data-viz minimaliste, gros chiffre central.",
-    hashtags: ["#Engagement", "#Culture"],
-    platforms: ["LinkedIn"],
+    titre: "Hydratation : combien de litres par jour ?",
+    description: "Post éducatif sur l'hydratation et les eaux thermales en soin.",
+    suggestedCaption: "💧 1,5 L d'eau + une brume thermale = peau et corps en pleine forme.",
+    mediaConcept: "Data-viz minimaliste, verre d'eau + brume Avène/La Roche.",
+    hashtags: ["#Hydratation", "#EauThermale", "#Bienetre"],
+    platforms: ["Instagram", "LinkedIn"],
     suggestedDate: addDays(10),
   },
 ];
 
 const _ideas = createStore<PostIdea[]>(seedIdeas);
 const IDEA_THEMES = [
-  { titre: "Marque employeur en 2026", description: "Tendances marque employeur.", hashtags: ["#MarqueEmployeur", "#RH"] },
-  { titre: "Onboarding hybride", description: "Bonnes pratiques d'onboarding hybride.", hashtags: ["#Onboarding", "#Hybride"] },
-  { titre: "IA & entretien annuel", description: "Comment l'IA transforme l'entretien annuel.", hashtags: ["#IA", "#Entretien"] },
+  { titre: "Routine anti-âge naturelle", description: "Conseils sérum + crème adaptés à chaque âge.", hashtags: ["#AntiAge", "#SoinVisage", "#Parapharmacie"] },
+  { titre: "Immunité et compléments", description: "Guide compléments alimentaires pour renforcer l'immunité.", hashtags: ["#Immunite", "#Complements", "#Sante"] },
+  { titre: "Soins bébé au naturel", description: "Produits bio et hypoallergéniques pour tout-petits.", hashtags: ["#Bebe", "#Naturel", "#Bio"] },
+  { titre: "Protection solaire quotidienne", description: "Importance du SPF au quotidien.", hashtags: ["#SPF", "#Solaire", "#Peau"] },
 ];
+
 export const postIdeasStore = {
   add: (i: PostIdea) => _ideas.set((s) => [i, ...s]),
   remove: (id: string) => _ideas.set((s) => s.filter((x) => x.id !== id)),
