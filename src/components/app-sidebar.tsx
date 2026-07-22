@@ -4,7 +4,6 @@ import {
   ShoppingBag,
   MessageSquareWarning,
   Sparkles,
-  Images,
   Settings,
   LogOut,
 } from "lucide-react";
@@ -29,9 +28,9 @@ const items = [
   { title: "Commandes", url: "/commandes", icon: ShoppingBag },
   { title: "Réclamations", url: "/reclamations", icon: MessageSquareWarning },
   { title: "Community Manager", url: "/community", icon: Sparkles },
-  { title: "Galerie", url: "/galerie", icon: Images },
   { title: "Paramètres", url: "/parametres", icon: Settings },
 ];
+
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
