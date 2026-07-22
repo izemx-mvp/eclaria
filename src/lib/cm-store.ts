@@ -1,8 +1,8 @@
 import { useSyncExternalStore } from "react";
-import { Facebook, Instagram, Linkedin, Youtube, Globe } from "lucide-react";
+import { Facebook, Instagram, Music2 } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
-export type SocialPlatform = "LinkedIn" | "Facebook" | "Instagram" | "YouTube";
+export type SocialPlatform = "Facebook" | "Instagram" | "TikTok";
 export type PostMediaKind = "image" | "video";
 
 export type PostMedia = {
@@ -49,7 +49,7 @@ export type PostIdea = {
   saved?: boolean;
 };
 
-export type CmPlatform = "Website" | "Facebook" | "Instagram" | "LinkedIn" | "YouTube";
+export type CmPlatform = "Facebook" | "Instagram" | "TikTok";
 export type CmPlatformConfig = {
   id: string;
   platform: CmPlatform;
@@ -59,26 +59,23 @@ export type CmPlatformConfig = {
 // ---------- constants ----------
 
 export const PLATFORM_META: Record<SocialPlatform, { color: string; bg: string; label: string }> = {
-  LinkedIn: { color: "text-sky-700 dark:text-sky-300", bg: "bg-sky-500/10", label: "LinkedIn" },
   Facebook: { color: "text-blue-700 dark:text-blue-300", bg: "bg-blue-500/10", label: "Facebook" },
   Instagram: { color: "text-pink-600 dark:text-pink-300", bg: "bg-pink-500/10", label: "Instagram" },
-  YouTube: { color: "text-red-600 dark:text-red-300", bg: "bg-red-500/10", label: "YouTube" },
+  TikTok: { color: "text-foreground", bg: "bg-foreground/10", label: "TikTok" },
 };
 
 export const PLATFORM_ICONS: Record<SocialPlatform, LucideIcon> = {
-  LinkedIn: Linkedin,
   Facebook,
   Instagram,
-  YouTube: Youtube,
+  TikTok: Music2,
 };
 
 export const CM_PLATFORM_ACCENT: Record<CmPlatform, { color: string; bg: string; icon: LucideIcon }> = {
-  Website: { color: "text-[color:var(--gold)]", bg: "bg-[color:var(--gold)]/10", icon: Globe },
   Facebook: { color: "text-blue-700 dark:text-blue-300", bg: "bg-blue-500/10", icon: Facebook },
   Instagram: { color: "text-pink-600 dark:text-pink-300", bg: "bg-pink-500/10", icon: Instagram },
-  LinkedIn: { color: "text-sky-700 dark:text-sky-300", bg: "bg-sky-500/10", icon: Linkedin },
-  YouTube: { color: "text-red-600 dark:text-red-300", bg: "bg-red-500/10", icon: Youtube },
+  TikTok: { color: "text-foreground", bg: "bg-foreground/10", icon: Music2 },
 };
+
 
 export const POST_IMAGES = [
   "https://images.unsplash.com/photo-1556228720-195a672e8a03?w=1200&q=80",
@@ -218,7 +215,7 @@ const seedIdeas: PostIdea[] = [
     suggestedCaption: "Vos cheveux tombent plus qu'à l'ordinaire ? C'est normal en automne. Voici notre routine anti-chute 💚",
     mediaConcept: "Reel Instagram, avant/après brossage, ampoules capillaires en fin de vidéo.",
     hashtags: ["#ChuteCheveux", "#Capillaire", "#Automne", "#Parapharmacie"],
-    platforms: ["Instagram", "YouTube"],
+    platforms: ["Instagram", "TikTok"],
     suggestedDate: addDays(3),
   },
   {
@@ -228,7 +225,8 @@ const seedIdeas: PostIdea[] = [
     suggestedCaption: "🎒 Rentrée = trousse à pharmacie à réviser. Voici notre check-list en 5 essentiels.",
     mediaConcept: "Carrousel infographique 5 slides, palette verte apaisante.",
     hashtags: ["#Pharmacie", "#Rentree", "#Sante", "#PremiersSecours"],
-    platforms: ["LinkedIn", "Facebook"],
+    platforms: ["TikTok", "Facebook"],
+
     suggestedDate: addDays(4),
   },
   {
@@ -258,7 +256,7 @@ const seedIdeas: PostIdea[] = [
     suggestedCaption: "💧 1,5 L d'eau + une brume thermale = peau et corps en pleine forme.",
     mediaConcept: "Data-viz minimaliste, verre d'eau + brume Avène/La Roche.",
     hashtags: ["#Hydratation", "#EauThermale", "#Bienetre"],
-    platforms: ["Instagram", "LinkedIn"],
+    platforms: ["Instagram", "TikTok"],
     suggestedDate: addDays(10),
   },
 ];
@@ -283,7 +281,7 @@ export const postIdeasStore = {
       suggestedCaption: `${t.titre} — 3 points essentiels à retenir.`,
       mediaConcept: "Visuel épuré, palette de marque.",
       hashtags: t.hashtags,
-      platforms: ["LinkedIn", "Facebook"],
+      platforms: ["Instagram", "Facebook"],
       suggestedDate: addDays(Math.floor(Math.random() * 10) + 1),
     };
     _ideas.set((s) => [idea, ...s]);
@@ -294,25 +292,6 @@ export const postIdeasStore = {
 
 // ---------- cm config store ----------
 
-const websiteDefaults = {
-  langue: "Français",
-  ton: "Conseil santé",
-  longueur: "Moyen 700-1200",
-  seoLevel: "Standard",
-  densiteMotsCles: 2,
-  audience: "Clientèle parapharmacie",
-  styleEcriture: "Éditorial",
-  cta: "Découvrez en boutique Eclaria",
-  auteur: "IA",
-  categorie: "Conseils santé",
-  creativite: 60,
-  inclureConclusion: true,
-  inclureFAQ: true,
-  genererTitreSEO: true,
-  genererMetaDesc: true,
-  genererTags: true,
-  genererCover: true,
-};
 const facebookDefaults = {
   longueurCaption: 200,
   emojis: "Moyenne",
@@ -329,29 +308,23 @@ const instagramDefaults = {
   cta: "Disponible en boutique & sur eclaria.com",
   imageFirst: true,
 };
-const linkedinDefaults = {
-  ton: "Expert",
-  formatage: "Moyen",
-  cta: "Découvrez notre sélection",
-  hashtagsStrategy: "3 santé + 2 marque",
-  audience: "Professionnels santé & partenaires",
+const tiktokDefaults = {
+  longueurCaption: 100,
+  nbHashtags: 8,
+  ton: "Fun",
+  styleVideo: "Tuto court",
+  duree: 30,
+  hookFort: true,
+  sousTitres: true,
+  cta: "Suivez-nous pour + de conseils santé",
 };
-const youtubeDefaults = {
-  styleTitre: "Accrocheur",
-  longueurDescription: "Moyen",
-  tags: "Parapharmacie, Santé, Beauté, Conseils",
-  promptMiniature: "Produit + fond vert doux + pharmacien souriant",
-  placementCTA: "Fin",
-};
-
 
 const seedConfigs: CmPlatformConfig[] = [
-  { id: uid(), platform: "Website", settings: { ...websiteDefaults } },
   { id: uid(), platform: "Facebook", settings: { ...facebookDefaults } },
   { id: uid(), platform: "Instagram", settings: { ...instagramDefaults } },
-  { id: uid(), platform: "LinkedIn", settings: { ...linkedinDefaults } },
-  { id: uid(), platform: "YouTube", settings: { ...youtubeDefaults } },
+  { id: uid(), platform: "TikTok", settings: { ...tiktokDefaults } },
 ];
+
 
 const _configs = createStore<CmPlatformConfig[]>(seedConfigs);
 export const cmConfigStore = {

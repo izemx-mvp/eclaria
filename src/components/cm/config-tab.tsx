@@ -13,12 +13,13 @@ import {
   type CmPlatform, type CmPlatformConfig,
 } from "@/lib/cm-store";
 
-const PLATFORMS: CmPlatform[] = ["Website", "Facebook", "Instagram", "LinkedIn", "YouTube"];
+const PLATFORMS: CmPlatform[] = ["Facebook", "Instagram", "TikTok"];
 
 export function ConfigTab() {
   const editorial = editorialConfigStore.use();
   const configs = cmConfigStore.useConfigs();
-  const [platform, setPlatform] = useState<CmPlatform>("Website");
+  const [platform, setPlatform] = useState<CmPlatform>("Facebook");
+
   const [newTheme, setNewTheme] = useState("");
   const [newAvoid, setNewAvoid] = useState("");
 
@@ -176,35 +177,13 @@ function PlatformConfigForm({ config }: { config: CmPlatformConfig }) {
   const num = (k: string, d = 0) => (s[k] as number | undefined) ?? d;
   const bool = (k: string, d = false) => (s[k] as boolean | undefined) ?? d;
 
-  if (config.platform === "Website") return (
-    <div className="grid md:grid-cols-3 gap-3">
-      <SelectField label="Langue" value={str("langue", "Français")} onChange={(v) => upd("langue", v)} options={["Français", "English", "العربية", "Español"]} />
-      <SelectField label="Ton d'écriture" value={str("ton", "Professionnel")} onChange={(v) => upd("ton", v)} options={["Professionnel", "Pédagogique", "Inspirationnel", "Analytique", "Expert"]} />
-      <SelectField label="Longueur d'article" value={str("longueur", "Moyen 700-1200")} onChange={(v) => upd("longueur", v)} options={["Court 400-600 mots", "Moyen 700-1200", "Long 1500+"]} />
-      <SelectField label="Niveau SEO" value={str("seoLevel", "Standard")} onChange={(v) => upd("seoLevel", v)} options={["Basique", "Standard", "Élevé", "Maximal"]} />
-      <SliderField label="Densité de mots-clés (%)" value={num("densiteMotsCles", 2)} onChange={(v) => upd("densiteMotsCles", v)} min={1} max={5} step={0.5} />
-      <InputField label="Audience cible" value={str("audience")} onChange={(v) => upd("audience", v)} />
-      <SelectField label="Style d'écriture" value={str("styleEcriture", "Éditorial")} onChange={(v) => upd("styleEcriture", v)} options={["Éditorial", "Journalistique", "Storytelling", "Technique"]} />
-      <InputField label="Style CTA" value={str("cta")} onChange={(v) => upd("cta", v)} />
-      <SelectField label="Auteur par défaut" value={str("auteur", "IA")} onChange={(v) => upd("auteur", v)} options={["IA", "Manuel"]} />
-      <InputField label="Catégorie par défaut" value={str("categorie")} onChange={(v) => upd("categorie", v)} />
-      <SliderField label="Créativité IA" value={num("creativite", 60)} onChange={(v) => upd("creativite", v)} min={0} max={100} step={5} />
-      <SwitchField label="Inclure une conclusion" value={bool("inclureConclusion", true)} onChange={(v) => upd("inclureConclusion", v)} />
-      <SwitchField label="Inclure une section FAQ" value={bool("inclureFAQ", false)} onChange={(v) => upd("inclureFAQ", v)} />
-      <SwitchField label="Générer titre SEO" value={bool("genererTitreSEO", true)} onChange={(v) => upd("genererTitreSEO", v)} />
-      <SwitchField label="Générer meta description" value={bool("genererMetaDesc", true)} onChange={(v) => upd("genererMetaDesc", v)} />
-      <SwitchField label="Générer les tags automatiquement" value={bool("genererTags", true)} onChange={(v) => upd("genererTags", v)} />
-      <SwitchField label="Générer l'image de couverture" value={bool("genererCover", true)} onChange={(v) => upd("genererCover", v)} />
-    </div>
-  );
-
   if (config.platform === "Facebook") return (
     <div className="grid md:grid-cols-3 gap-3">
       <SliderField label="Longueur caption (car.)" value={num("longueurCaption", 200)} onChange={(v) => upd("longueurCaption", v)} min={50} max={500} step={10} />
       <SelectField label="Utilisation des émojis" value={str("emojis", "Moyenne")} onChange={(v) => upd("emojis", v)} options={["Aucun", "Faible", "Moyenne", "Élevée"]} />
       <SliderField label="Nombre de hashtags" value={num("nbHashtags", 5)} onChange={(v) => upd("nbHashtags", v)} min={0} max={15} />
       <SelectField label="Style de CTA" value={str("styleCTA", "Interrogatif")} onChange={(v) => upd("styleCTA", v)} options={["Interrogatif", "Impératif", "Invitation", "Aucun"]} />
-      <SelectField label="Ton conversationnel" value={str("tonConversationnel", "Conversationnel")} onChange={(v) => upd("tonConversationnel", v)} options={["Conversationnel", "Informatif", "Professionnel", "Humoristique"]} />
+      <SelectField label="Ton conversationnel" value={str("tonConversationnel", "Chaleureux")} onChange={(v) => upd("tonConversationnel", v)} options={["Chaleureux", "Informatif", "Professionnel", "Humoristique"]} />
       <SelectField label="Niveau de storytelling" value={str("storytelling", "Moyen")} onChange={(v) => upd("storytelling", v)} options={["Faible", "Moyen", "Élevé"]} />
     </div>
   );
@@ -220,24 +199,18 @@ function PlatformConfigForm({ config }: { config: CmPlatformConfig }) {
     </div>
   );
 
-  if (config.platform === "LinkedIn") return (
-    <div className="grid md:grid-cols-3 gap-3">
-      <SelectField label="Ton professionnel" value={str("ton", "Professionnel")} onChange={(v) => upd("ton", v)} options={["Professionnel", "Expert", "Inspirationnel", "Analytique"]} />
-      <SelectField label="Formatage des paragraphes" value={str("formatage", "Moyen")} onChange={(v) => upd("formatage", v)} options={["Court 1-2 lignes", "Moyen", "Long storytelling"]} />
-      <InputField label="CTA" value={str("cta")} onChange={(v) => upd("cta", v)} />
-      <InputField label="Stratégie hashtags" value={str("hashtagsStrategy")} onChange={(v) => upd("hashtagsStrategy", v)} />
-      <InputField label="Type d'audience" value={str("audience")} onChange={(v) => upd("audience", v)} />
-    </div>
-  );
-
-  // YouTube
+  // TikTok
   return (
-    <div className="grid md:grid-cols-2 gap-3">
-      <SelectField label="Style du titre" value={str("styleTitre", "Accrocheur")} onChange={(v) => upd("styleTitre", v)} options={["Accrocheur", "Descriptif", "Question", "Chiffré"]} />
-      <SelectField label="Longueur de description" value={str("longueurDescription", "Moyen")} onChange={(v) => upd("longueurDescription", v)} options={["Court", "Moyen", "Long"]} />
-      <InputField label="Tags (virgules)" value={str("tags")} onChange={(v) => upd("tags", v)} />
-      <InputField label="Prompt miniature" value={str("promptMiniature")} onChange={(v) => upd("promptMiniature", v)} />
-      <SelectField label="Placement du CTA" value={str("placementCTA", "Fin")} onChange={(v) => upd("placementCTA", v)} options={["Début", "Milieu", "Fin", "Début & fin"]} />
+    <div className="grid md:grid-cols-3 gap-3">
+      <SliderField label="Longueur caption (car.)" value={num("longueurCaption", 100)} onChange={(v) => upd("longueurCaption", v)} min={30} max={300} step={10} />
+      <SliderField label="Nombre de hashtags" value={num("nbHashtags", 8)} onChange={(v) => upd("nbHashtags", v)} min={0} max={20} />
+      <SelectField label="Ton" value={str("ton", "Fun")} onChange={(v) => upd("ton", v)} options={["Fun", "Pédagogique", "Chaleureux", "Direct"]} />
+      <SelectField label="Style de vidéo" value={str("styleVideo", "Tuto court")} onChange={(v) => upd("styleVideo", v)} options={["Tuto court", "Avant/Après", "Coulisses", "Conseil pharmacien", "Trend"]} />
+      <SliderField label="Durée cible (sec.)" value={num("duree", 30)} onChange={(v) => upd("duree", v)} min={15} max={90} step={5} />
+      <InputField label="CTA" value={str("cta")} onChange={(v) => upd("cta", v)} />
+      <SwitchField label="Hook fort (3 premières sec.)" value={bool("hookFort", true)} onChange={(v) => upd("hookFort", v)} />
+      <SwitchField label="Sous-titres automatiques" value={bool("sousTitres", true)} onChange={(v) => upd("sousTitres", v)} />
     </div>
   );
 }
+
