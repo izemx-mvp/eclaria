@@ -3,10 +3,12 @@ import {
   Outlet,
   createRootRouteWithContext,
   useRouter,
+  useRouterState,
+  useNavigate,
   HeadContent,
   Scripts,
 } from "@tanstack/react-router";
-import { useEffect, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 
 import appCss from "../styles.css?url";
 import { reportLovableError } from "../lib/lovable-error-reporting";
@@ -14,6 +16,7 @@ import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/app-sidebar";
 import { FloatingChatbot } from "@/components/floating-chatbot";
 import { Toaster } from "@/components/ui/sonner";
+import { isAuthed } from "@/lib/auth";
 
 function NotFoundComponent() {
   return (
@@ -115,19 +118,57 @@ function RootShell({ children }: { children: ReactNode }) {
   );
 }
 
+function AuthGate({ children }: { children: ReactNode }) {
+  const pathname = useRouterState({ select: (s) => s.location.pathname });
+  const navigate = useNavigate();
+  const [hydrated, setHydrated] = useState(false);
+  const [authed, setAuthed] = useState(false);
+
+  useEffect(() => {
+    const a = isAuthed();
+    setAuthed(a);
+    setHydrated(true);
+    if (!a && pathname !== "/login") {
+      navigate({ to: "/login" });
+    }
+  }, []);
+
+  useEffect(() => {
+    if (!hydrated) return;
+    const a = isAuthed();
+    setAuthed(a);
+    if (!a && pathname !== "/login") {
+      navigate({ to: "/login" });
+    }
+  }, [pathname, hydrated]);
+
+  if (!hydrated) return null;
+
+  // Login route renders standalone (no sidebar chrome)
+  if (pathname === "/login" || !authed) {
+    return <Outlet />;
+  }
+
+  return (
+    <SidebarProvider>
+      <AppSidebar />
+      <SidebarInset className="flex min-h-screen w-full flex-col bg-background">
+        {children}
+      </SidebarInset>
+      <FloatingChatbot />
+    </SidebarProvider>
+  );
+}
+
 function RootComponent() {
   const { queryClient } = Route.useRouteContext();
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SidebarProvider>
-        <AppSidebar />
-        <SidebarInset className="flex min-h-screen w-full flex-col bg-background">
-          <Outlet />
-        </SidebarInset>
-        <FloatingChatbot />
-        <Toaster />
-      </SidebarProvider>
+      <AuthGate>
+        <Outlet />
+      </AuthGate>
+      <Toaster />
     </QueryClientProvider>
   );
 }
