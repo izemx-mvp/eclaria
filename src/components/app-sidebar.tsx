@@ -1,4 +1,4 @@
-import { Link, useRouterState } from "@tanstack/react-router";
+import { Link, useNavigate, useRouterState } from "@tanstack/react-router";
 import {
   LayoutDashboard,
   ShoppingBag,
@@ -6,7 +6,7 @@ import {
   Sparkles,
   Images,
   Settings,
-  Leaf,
+  LogOut,
 } from "lucide-react";
 import {
   Sidebar,
@@ -20,6 +20,9 @@ import {
   SidebarMenuItem,
   SidebarFooter,
 } from "@/components/ui/sidebar";
+import { EclariaLogo, EclariaWordmark } from "@/components/logo";
+import { signOut } from "@/lib/auth";
+import { toast } from "sonner";
 
 const items = [
   { title: "Tableau de bord", url: "/", icon: LayoutDashboard },
@@ -32,17 +35,25 @@ const items = [
 
 export function AppSidebar() {
   const pathname = useRouterState({ select: (r) => r.location.pathname });
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    signOut();
+    toast.success("Déconnexion réussie");
+    navigate({ to: "/login" });
+  };
 
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="border-b border-sidebar-border">
-        <div className="flex items-center gap-2 px-2 py-3">
-          <div className="flex h-9 w-9 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-            <Leaf className="h-5 w-5" />
+        <div className="flex items-center px-2 py-3 group-data-[collapsible=icon]:justify-center">
+          <div className="group-data-[collapsible=icon]:block hidden">
+            <div className="h-8 w-8">
+              <EclariaLogo />
+            </div>
           </div>
-          <div className="flex flex-col group-data-[collapsible=icon]:hidden">
-            <span className="text-sm font-semibold text-sidebar-foreground">Eclaria</span>
-            <span className="text-xs text-sidebar-foreground/70">Parapharmacie</span>
+          <div className="group-data-[collapsible=icon]:hidden">
+            <EclariaWordmark />
           </div>
         </div>
       </SidebarHeader>
@@ -69,10 +80,18 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
       <SidebarFooter className="border-t border-sidebar-border">
-        <div className="flex items-center gap-2 px-2 py-2 text-xs text-sidebar-foreground/70 group-data-[collapsible=icon]:hidden">
-          <div className="h-2 w-2 rounded-full bg-primary" />
+        <div className="flex items-center gap-2 px-2 py-1.5 text-xs text-sidebar-foreground/70 group-data-[collapsible=icon]:hidden">
+          <div className="h-2 w-2 rounded-full bg-primary animate-pulse" />
           Agents IA actifs
         </div>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleLogout} tooltip="Se déconnecter">
+              <LogOut className="h-4 w-4" />
+              <span>Se déconnecter</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
       </SidebarFooter>
     </Sidebar>
   );
