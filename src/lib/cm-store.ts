@@ -296,18 +296,18 @@ export const postIdeasStore = {
 
 const websiteDefaults = {
   langue: "Français",
-  ton: "Professionnel",
+  ton: "Conseil santé",
   longueur: "Moyen 700-1200",
   seoLevel: "Standard",
   densiteMotsCles: 2,
-  audience: "Dirigeants RH",
+  audience: "Clientèle parapharmacie",
   styleEcriture: "Éditorial",
-  cta: "Contactez notre équipe",
+  cta: "Découvrez en boutique Eclaria",
   auteur: "IA",
-  categorie: "Actualités",
+  categorie: "Conseils santé",
   creativite: 60,
   inclureConclusion: true,
-  inclureFAQ: false,
+  inclureFAQ: true,
   genererTitreSEO: true,
   genererMetaDesc: true,
   genererTags: true,
@@ -318,7 +318,7 @@ const facebookDefaults = {
   emojis: "Moyenne",
   nbHashtags: 5,
   styleCTA: "Interrogatif",
-  tonConversationnel: "Conversationnel",
+  tonConversationnel: "Chaleureux",
   storytelling: "Moyen",
 };
 const instagramDefaults = {
@@ -326,23 +326,24 @@ const instagramDefaults = {
   nbHashtags: 15,
   emojis: "Moyenne",
   ton: "Chaleureux",
-  cta: "Découvrez en bio",
+  cta: "Disponible en boutique & sur eclaria.com",
   imageFirst: true,
 };
 const linkedinDefaults = {
-  ton: "Professionnel",
+  ton: "Expert",
   formatage: "Moyen",
-  cta: "Découvrez",
-  hashtagsStrategy: "3 génériques + 2 niche",
-  audience: "Décideurs RH",
+  cta: "Découvrez notre sélection",
+  hashtagsStrategy: "3 santé + 2 marque",
+  audience: "Professionnels santé & partenaires",
 };
 const youtubeDefaults = {
   styleTitre: "Accrocheur",
   longueurDescription: "Moyen",
-  tags: "RH, IA, Onboarding",
-  promptMiniature: "Fond dégradé + visage expressif",
+  tags: "Parapharmacie, Santé, Beauté, Conseils",
+  promptMiniature: "Produit + fond vert doux + pharmacien souriant",
   placementCTA: "Fin",
 };
+
 
 const seedConfigs: CmPlatformConfig[] = [
   { id: uid(), platform: "Website", settings: { ...websiteDefaults } },
