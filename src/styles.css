@@ -120,6 +120,15 @@
   --sidebar-ring: oklch(0.7 0.15 155);
 }
 
+:root {
+  --gold: oklch(0.78 0.14 85);
+  --gold-foreground: oklch(0.25 0.05 85);
+}
+.dark {
+  --gold: oklch(0.82 0.15 85);
+  --gold-foreground: oklch(0.18 0.02 240);
+}
+
 @layer base {
   * {
     border-color: var(--color-border);
@@ -131,3 +140,26 @@
     font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   }
 }
+
+@utility btn-premium {
+  background-image: linear-gradient(135deg, var(--primary), color-mix(in oklch, var(--gold) 85%, var(--primary)));
+  color: var(--primary-foreground);
+  transition: filter 0.2s ease, transform 0.15s ease;
+}
+@utility btn-premium-hover {
+  filter: brightness(1.05);
+}
+@utility stat-primary {
+  background: color-mix(in oklch, var(--primary) 12%, transparent);
+  color: var(--primary);
+}
+@utility stat-gold {
+  background: color-mix(in oklch, var(--gold) 15%, transparent);
+  color: color-mix(in oklch, var(--gold) 75%, var(--foreground));
+}
+@utility scroll-fancy {
+  &::-webkit-scrollbar { width: 8px; height: 8px; }
+  &::-webkit-scrollbar-thumb { background: color-mix(in oklch, var(--muted-foreground) 30%, transparent); border-radius: 8px; }
+  &::-webkit-scrollbar-track { background: transparent; }
+}
+
