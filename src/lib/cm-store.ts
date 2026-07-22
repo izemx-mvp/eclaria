@@ -215,7 +215,7 @@ const seedIdeas: PostIdea[] = [
     suggestedCaption: "Vos cheveux tombent plus qu'à l'ordinaire ? C'est normal en automne. Voici notre routine anti-chute 💚",
     mediaConcept: "Reel Instagram, avant/après brossage, ampoules capillaires en fin de vidéo.",
     hashtags: ["#ChuteCheveux", "#Capillaire", "#Automne", "#Parapharmacie"],
-    platforms: ["Instagram", "YouTube"],
+    platforms: ["Instagram", "TikTok"],
     suggestedDate: addDays(3),
   },
   {
@@ -225,7 +225,8 @@ const seedIdeas: PostIdea[] = [
     suggestedCaption: "🎒 Rentrée = trousse à pharmacie à réviser. Voici notre check-list en 5 essentiels.",
     mediaConcept: "Carrousel infographique 5 slides, palette verte apaisante.",
     hashtags: ["#Pharmacie", "#Rentree", "#Sante", "#PremiersSecours"],
-    platforms: ["LinkedIn", "Facebook"],
+    platforms: ["TikTok", "Facebook"],
+
     suggestedDate: addDays(4),
   },
   {
@@ -255,7 +256,7 @@ const seedIdeas: PostIdea[] = [
     suggestedCaption: "💧 1,5 L d'eau + une brume thermale = peau et corps en pleine forme.",
     mediaConcept: "Data-viz minimaliste, verre d'eau + brume Avène/La Roche.",
     hashtags: ["#Hydratation", "#EauThermale", "#Bienetre"],
-    platforms: ["Instagram", "LinkedIn"],
+    platforms: ["Instagram", "TikTok"],
     suggestedDate: addDays(10),
   },
 ];
@@ -280,7 +281,7 @@ export const postIdeasStore = {
       suggestedCaption: `${t.titre} — 3 points essentiels à retenir.`,
       mediaConcept: "Visuel épuré, palette de marque.",
       hashtags: t.hashtags,
-      platforms: ["LinkedIn", "Facebook"],
+      platforms: ["Instagram", "Facebook"],
       suggestedDate: addDays(Math.floor(Math.random() * 10) + 1),
     };
     _ideas.set((s) => [idea, ...s]);
@@ -291,25 +292,6 @@ export const postIdeasStore = {
 
 // ---------- cm config store ----------
 
-const websiteDefaults = {
-  langue: "Français",
-  ton: "Conseil santé",
-  longueur: "Moyen 700-1200",
-  seoLevel: "Standard",
-  densiteMotsCles: 2,
-  audience: "Clientèle parapharmacie",
-  styleEcriture: "Éditorial",
-  cta: "Découvrez en boutique Eclaria",
-  auteur: "IA",
-  categorie: "Conseils santé",
-  creativite: 60,
-  inclureConclusion: true,
-  inclureFAQ: true,
-  genererTitreSEO: true,
-  genererMetaDesc: true,
-  genererTags: true,
-  genererCover: true,
-};
 const facebookDefaults = {
   longueurCaption: 200,
   emojis: "Moyenne",
@@ -326,29 +308,23 @@ const instagramDefaults = {
   cta: "Disponible en boutique & sur eclaria.com",
   imageFirst: true,
 };
-const linkedinDefaults = {
-  ton: "Expert",
-  formatage: "Moyen",
-  cta: "Découvrez notre sélection",
-  hashtagsStrategy: "3 santé + 2 marque",
-  audience: "Professionnels santé & partenaires",
+const tiktokDefaults = {
+  longueurCaption: 100,
+  nbHashtags: 8,
+  ton: "Fun",
+  styleVideo: "Tuto court",
+  duree: 30,
+  hookFort: true,
+  sousTitres: true,
+  cta: "Suivez-nous pour + de conseils santé",
 };
-const youtubeDefaults = {
-  styleTitre: "Accrocheur",
-  longueurDescription: "Moyen",
-  tags: "Parapharmacie, Santé, Beauté, Conseils",
-  promptMiniature: "Produit + fond vert doux + pharmacien souriant",
-  placementCTA: "Fin",
-};
-
 
 const seedConfigs: CmPlatformConfig[] = [
-  { id: uid(), platform: "Website", settings: { ...websiteDefaults } },
   { id: uid(), platform: "Facebook", settings: { ...facebookDefaults } },
   { id: uid(), platform: "Instagram", settings: { ...instagramDefaults } },
-  { id: uid(), platform: "LinkedIn", settings: { ...linkedinDefaults } },
-  { id: uid(), platform: "YouTube", settings: { ...youtubeDefaults } },
+  { id: uid(), platform: "TikTok", settings: { ...tiktokDefaults } },
 ];
+
 
 const _configs = createStore<CmPlatformConfig[]>(seedConfigs);
 export const cmConfigStore = {
